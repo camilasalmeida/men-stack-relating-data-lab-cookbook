@@ -8,6 +8,9 @@ const morgan = require('morgan');
 const session = require('express-session');
 
 const authController = require('./controllers/auth.js');
+const foodsController = require('./controllers/foods.js');
+const passUserToView = require('./middleware/pass-user-to-view.js');
+//------------------------------------------------------------------------\\
 
 const port = process.env.PORT ? process.env.PORT : '3000';
 
@@ -17,6 +20,7 @@ mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
+//------------------------------------------------------------------------\\
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 // app.use(morgan('dev'));
@@ -28,6 +32,8 @@ app.use(
   })
 );
 
+
+//------------------------------------------------------------------------\\
 app.get('/', (req, res) => {
   res.render('index.ejs', {
     user: req.session.user,
@@ -42,8 +48,13 @@ app.get('/vip-lounge', (req, res) => {
   }
 });
 
+app.use(passUserToView)                                                 //For this app, users must be signed in to view any of the routes associated with their pantry.
 app.use('/auth', authController);
+app.use(isSignedIn);
+app.use('/users/:userId/foods', foodsController)                        //Use middleware to direct incoming requests to /users/:userId/foods to the foods controller.
 
+
+//------------------------------------------------------------------------\\
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
 });
