@@ -1,0 +1,21 @@
+<!-- 
+ 1. This nav should have a home link displayed on EVERY page.
+ 2. Other links should be rendered conditionally based on whether or not a user is signed in.
+ 3. If a user is signed in, they should see links to “View my Pantry” or “Sign Out”.
+ 4. If a user is not signed in, they should see links to “Sign In” or “Sign Up”.
+  -->
+
+  <nav>
+    <a href="/">Home</a>
+    <% if(user) { %>
+        <a href="/users/<%=user._id%>/foods">View my Pantry</a>
+        <a href="/auth/sign-out">Sign Out</a>
+    <% } else { %>
+        <a href="/auth/sign-in">Sign In</a>
+        <a href="/auth/sign-out">Sign Out</a>
+    <% } %>
+  </nav>
+
+
+ 
+

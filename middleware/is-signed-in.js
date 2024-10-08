@@ -5,5 +5,5 @@ const isSignedIn = (req, res, next) => {
     res.redirect('/auth/sign-in');
 };
 
-module,exports = isSignedIn;          //Export it to the server.js
+module.exports = isSignedIn;          //Export it to the server.js
 
