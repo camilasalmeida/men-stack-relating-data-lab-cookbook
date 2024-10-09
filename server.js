@@ -25,7 +25,7 @@ mongoose.connection.on('connected', () => {
 //------------------------------------------------------------------------\\
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -50,10 +50,10 @@ app.get('/vip-lounge', (req, res) => {
   }
 });
 
-app.use(passUserToView);                                               //For this app, users must be signed in to view any of the routes associated with their pantry.
+app.use(passUserToView)                                                 //For this app, users must be signed in to view any of the routes associated with their pantry.
 app.use('/auth', authController);
 app.use(isSignedIn);
-app.use('/users/:userId/foods', foodsController);                        //Use middleware to direct incoming requests to /users/:userId/foods to the foods controller.
+app.use('/users/:userId/foods', foodsController)                        //Use middleware to direct incoming requests to /users/:userId/foods to the foods controller.
 
 
 //------------------------------------------------------------------------\\
