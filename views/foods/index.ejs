@@ -11,19 +11,20 @@
     <%- include('./partials/_navbar.ejs') %>
     <h1>Welcome to my Pantry</h1>
         <ul>
-            <% if (pantryItems && pantryItems.length > 0 ) { %>
-                <% pantryItems.forEach((food) => { %>
-        <li>
-            <a href="/users/<%= user._id %>/foods/<%= food._id %>">
-                Food: <%= food.name %>, Expiration Date: <%= new Date(food.expirationDate).toLocaleDateString() %>
-            </a>
-        </li>
-    <% }) %>
-    <% } else { %>
-        <li>There are no items in this pantry.</li>
-        <% } %>
-    </ul>
-
+            <% if (foods && foods.length > 0) { %>
+            <% foods.forEach((food) => { %>
+            <li>
+                    Food: <%= food.name %>, Expiration Date: <%= food.expirationDate %>
+                </a>
+                <form  action="/users/<%= user._id %>/foods/<%= food._id %>?_method=DELETE"method="POST"  style="display:inline">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+                <% }) %>
+                <% } else { %>
+            <li>There are no items in this pantry.</li>
+            <% } %>
+        </ul>
     <a href="/users/<%= user._id %>/foods/new">Add a food</a>
 
   </body>
