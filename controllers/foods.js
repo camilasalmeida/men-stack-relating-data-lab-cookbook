@@ -72,8 +72,8 @@ try {
     const currentUser = await User.findById(req.session.user._id)                    //Find the current user
     const food = currentUser.pantry.id(req.params.foodId);                           //Find the current food
     food.set(req.body);                                                              //Use the .set() method, to update the current food to reflect the new form data on req.body
-    await currentUser.save();
-    res.redirect(`/users/${currentUser._id}/foods/${food._id}`);
+    await currentUser.save()
+    res.redirect(`/users/${req.session.user._id}/foods`)
 
 } catch(error) {
     console.log(error);
