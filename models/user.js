@@ -7,7 +7,7 @@ const foodSchema = new mongoose.Schema({
     },
     expirationDate: {
       type: Date,
-      required: true,
+      
     },
 })
 

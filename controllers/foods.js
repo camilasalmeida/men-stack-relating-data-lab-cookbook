@@ -6,7 +6,7 @@ const User = require('../models/user.js')
 //Landing page/Index page
 router.get('/', async (req, res) => {
     try {
-    const currentUser = await User.findById(req.session._id);            //Find the User
+    const currentUser = await User.findById(req.session.user._id);            //Find the User
     if (!currentUser) {
         return res.redirect('/')                                         //Could not find a User
     }
@@ -50,6 +50,35 @@ router.delete('/:foodId', async (req, res) => {
         console.log(error);
         res.redirect('/');
     }
+});
+
+//Edit
+router.get('/:foodId/edit', async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.session.user._id)
+        const food = currentUser.pantry.id(req.params.foodId);
+        res.render('foods/edit.ejs', {
+            food: food,
+        });
+    } catch (error) {
+        console.log(error);
+        res.redirect('/');
+    }
+});
+
+//Update - PUT
+router.put('/:foodId', async (req, res) => {
+try {
+    const currentUser = await User.findById(req.session.user._id)                    //Find the current user
+    const food = currentUser.pantry.id(req.params.foodId);                           //Find the current food
+    food.set(req.body);                                                              //Use the .set() method, to update the current food to reflect the new form data on req.body
+    await currentUser.save();
+    res.redirect(`/users/${currentUser._id}/foods/${food._id}`);
+
+} catch(error) {
+    console.log(error);
+    res.redirect('/');
+}
 });
 
 module.exports = router;

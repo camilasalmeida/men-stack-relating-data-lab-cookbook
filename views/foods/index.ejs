@@ -8,7 +8,7 @@
 
 
   <body>
-    <%- include('./partials/_navbar.ejs') %>
+    <%- include('../partials/_navbar.ejs') %>
     <h1>Welcome to my Pantry</h1>
         <ul>
             <% if (foods && foods.length > 0) { %>
@@ -19,6 +19,7 @@
                 <form  action="/users/<%= user._id %>/foods/<%= food._id %>?_method=DELETE"method="POST"  style="display:inline">
                     <button type="submit">Delete</button>
                 </form>
+                <a href="/users/<%= user._id%>/foods/<%=food._id%>/edit">Edit Item</a>
             </li>
                 <% }) %>
                 <% } else { %>
